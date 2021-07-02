@@ -1,0 +1,72 @@
+@import "reset.css";  /* TIL : reset.css 는 여러 브라우저가 각자 다른 패딩의 기본값을 가지고 있기 때문에 모든 설정에서 0으로 시작하여 다 같게 보이게 만들어준다.  */
+
+body {
+    background-color: #f6f9fc;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 0px;   /* TIL : padding 설정 순서 */
+  }
+
+
+.canvas {
+    width: 700px;
+    height: 700px;
+    background-color: white;
+    border-radius: 15px;
+    /* */
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.controls {        /* TIL : css 를 작성할 때는 부모순으로 내림차순으로 작성해나간다. 그래야 안 헷갈림 */
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.controls .controls_btns {
+  margin-bottom: 30px;
+}
+
+
+.controls_btns button {
+    all: unset;  /* TIL : 버튼 투명화 */
+    cursor: pointer;
+    background-color: white;
+    padding: 5px 0px;
+    width: 80px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.2); /* TIL : border 순서(굵기, 선종류, 색상) */
+    color: rgba(0, 0, 0, 0.8);
+    text-transform: uppercase;  /* TIL : 글자 바꾸기 -> 대문자, 소문자 */
+}
+
+
+.controls_btns button:active { /* TIL : 버튼에 active 효과 주기 */
+  transform: scale(0.98);   /* TIL : 버튼을 누르면 작아지는 효과 scale(누를 때 변경 크기)*/  
+}
+
+
+.controls .controls_colors {
+  display: flex;
+  
+}
+
+
+.controls_colors .controls_color {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px; /* TIL : 원형으로 만들려면 일단 정사각형으로 만든 후 그 절반으로 border-radius 를 적용하면 된다*/
+    cursor: pointer; /* TIL : cursor 는 마우스를 올리면 나오는 이미지를 설정할 수 있다. */
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+
+
+.controls .controls_range {
+  margin-bottom: 30px;
+}
