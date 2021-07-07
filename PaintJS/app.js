@@ -3,13 +3,25 @@ const ctx = canvas.getContext("2d"); // context 설정 context는 픽셀에 접�
 const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jsRange");
 const mode = document.getElementById("jsMode");
+const saveBtn = document.getElementById("jsSave");
 
-canvas.width = document.getElementsByClassName("canvas")[0].offsetWidth; // or 700 이라고 적자 실제 픽셀 사이즈를 안 주면 글씨가 안그려진다. 
-canvas.height = document.getElementsByClassName("canvas")[0].offsetHeight;
+
+
+
+const CANVAS_SIZE = 700;
+const INITIAL_COLOR = "#2c2c2c"; // 같은 값이 여러개 있다면 이렇게 변수를 설정해서 지정하는 것이 변경할때 에러가 날 확률이 적다. 
+
 
 // 기본값 
-ctx.strokeStyle = "#2c2c2c";
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+ctx.strokeStyle = INITIAL_COLOR; // 기본값 변경 
+ctx.fillStyle = INITIAL_COLOR;
 ctx.lineWidth = 2.5;
+
+canvas.width = CANVAS_SIZE;// or 700 이라고 적자 실제 픽셀 사이즈를 안 주면 글씨가 안그려진다. 
+canvas.height = CANVAS_SIZE;
+
 
 
 let painting = false;
@@ -61,6 +73,7 @@ function handleColorClick(event) {
   const color = event.target.style.backgroundColor;
   //console.log(color);
   ctx.strokeStyle = color;
+  ctx.fillStyle = color; // fill 색도 같이 변경  
 }
   
 
@@ -82,6 +95,29 @@ function handleModeClick(event) {
   }
 }
 
+function handleCanvasClick() {
+  if (filling) {
+  ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+  }
+}
+
+
+// 우클릭 방지 핸들러 함수 
+function handleCM(event){
+  event.preventDefault(); // TIL : 우클릭 방지 이벤트!
+}
+
+//이미지 저장 핸들러 함수
+function handleSaveClick() {
+  const image = canvas.toDataURL("image/jpeg"); 
+  // .toDataURL 메서드는 이미지를 데이터로 바꾸어서 URL 로 변경하는 메서드이다.
+  // toDataURL 인자에 아무것도 안넣으면 jpeg 말고 png 로 파일을 만든다. 
+  const link = document.createElement("a"); 
+  link.href = image;
+  link.download = "PaintJS";
+  link.click();
+
+}
 
 
 if(canvas) {
@@ -89,7 +125,8 @@ if(canvas) {
   canvas.addEventListener("mousedown", startPainting);  // TIL : mousedown 은 클릭을 의미 
   canvas.addEventListener("mouseup", stopPainting); // mouseup 은 마우스 클릭을 떼기
   canvas.addEventListener("mouseleave", stopPainting); // mouseleave 는 마우스가 바깥으로 나감을 의미 
-
+  canvas.addEventListener("click", handleCanvasClick);
+  canvas.addEventListener("contextmenu", handleCM);// 우클릭 방지 이벤트 contextmenu 는 마우스 오른쪽 버튼을 누르면 나오는 메뉴이다 .
 }                                                     
 
 
@@ -106,4 +143,8 @@ if(range) {
 
 if(mode) {
   mode.addEventListener("click", handleModeClick);
+}
+
+if(saveBtn) {
+  saveBtn.addEventListener("click", handleSaveClick);
 }
